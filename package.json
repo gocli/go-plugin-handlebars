@@ -1,0 +1,26 @@
+{
+  "name": "go-plugin-handlebars",
+  "version": "1.0.0",
+  "description": "Go plugin to apply Handlebars to files",
+  "main": "plugin.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gocli/go-plugin-handlebars.git"
+  },
+  "keywords": [
+    "handlebars",
+    "template",
+    "cli"
+  ],
+  "author": "Stanislav Termosa <termosa.stanislav@gmail.com> (https://github.com/termosa)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gocli/go-plugin-handlebars/issues"
+  },
+  "homepage": "https://github.com/gocli/go-plugin-handlebars#readme",
+  "dependencies": {
+    "globby": "^7.1.1",
+    "go-plugin-fs": "^1.0.0",
+    "handlebars": "^4.0.11"
+  }
+}
