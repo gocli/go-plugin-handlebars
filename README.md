@@ -1,4 +1,4 @@
-# go-plugin-handlebars
+# go-plugin-handlebars [![npm](https://img.shields.io/npm/v/go-plugin-handlebars.svg?style=flat-square)](https://www.npmjs.com/package/go-plugin-handlebars)
 
 [Go](https://www.npmjs.com/package/go) plugin to apply [Handlebars](http://handlebarsjs.com/) to files
 
