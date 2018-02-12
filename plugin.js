@@ -56,7 +56,7 @@ function installHandlebarsPlugin (proto) {
 
     return loadTemplate(path)
       .then(function (template) {
-        template(context, destPath)
+        return template(context, destPath)
       })
   }
 
