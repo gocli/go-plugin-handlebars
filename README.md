@@ -18,13 +18,7 @@ go.use(require('go-plugin-handlebars'))
 ### Get root directory for templates
 
 ```js
-var /* string */ templatesDirectory = go.getTemplateDir() // default: "./templates"
-```
-
-### Set root directory for templates
-
-```js
-var /* string */ normalizedTemplatesDirectory = go.setTemplateDir( /* string */ templatesPath )
+var /* string */ templatesDirectory = go.getTemplatesDir() // default: "./templates"
 ```
 
 ### Load template to use it multiple times
@@ -238,8 +232,6 @@ $ node gofile.js
 ```js
 var go = require('go')
 go.use(require('go-plugin-handlebars'))
-
-go.setTemplateDir('.templates')
 
 var context = {
   port: process.env.PORT || 8080,

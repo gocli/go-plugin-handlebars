@@ -1,14 +1,11 @@
-import {
-  resolve as resolvePath,
-  join as joinPath
-} from 'path'
-import glob from 'globby'
-import processTemplate from './process-template'
-import resolveTemplatePath from './resolve-template-path'
-import isRelativePath from './is-relative-path'
-import isTemplateSource from './is-template-source'
+const { resolve: resolvePath, join: joinPath } = require('path')
+const glob = require('globby')
+const processTemplate = require('./process-template')
+const resolveSourcePath = require('./resolve-source-path')
+const isTemplatePath = require('./is-template-path')
+const isTemplateSource = require('./is-template-source')
 
-const processTemplates = (proto, search, contextOrResolver, contextOrNothing) => {
+const processTemplates = (plugin, search, contextOrResolver, contextOrNothing) => {
   let pattern
   const options = {
     gitignore: true,
@@ -30,9 +27,9 @@ const processTemplates = (proto, search, contextOrResolver, contextOrNothing) =>
   }
 
   if (options.cwd) {
-    options.cwd = resolveTemplatePath(proto.getTemplateDir(), options.cwd)
-  } else if (!isRelativePath(pattern)) {
-    options.cwd = proto.getTemplateDir()
+    options.cwd = resolveSourcePath(plugin.templatesDir, options.cwd)
+  } else if (isTemplatePath(pattern)) {
+    options.cwd = plugin.templatesDir
   } else {
     options.cwd = '.'
   }
@@ -44,7 +41,7 @@ const processTemplates = (proto, search, contextOrResolver, contextOrNothing) =>
   } else if (typeof contextOrResolver === 'string') {
     resolver = (fileName) => joinPath(contextOrResolver, fileName)
   } else {
-    resolver = (fileName) => isTemplateSource(proto.getTemplateDir(), cwd) ? fileName : joinPath(cwd, fileName)
+    resolver = (fileName) => isTemplateSource(plugin.templatesDir, cwd) ? fileName : joinPath(cwd, fileName)
   }
 
   const context = typeof contextOrResolver === 'object' ? contextOrResolver : contextOrNothing || {}
@@ -60,4 +57,4 @@ const processTemplates = (proto, search, contextOrResolver, contextOrNothing) =>
     })
 }
 
-export default processTemplates
+module.exports = processTemplates

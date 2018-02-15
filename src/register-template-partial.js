@@ -1,7 +1,7 @@
-import Handlebars from 'handlebars'
+const Handlebars = require('handlebars')
 
 const registerTemplatePartial = (name, template) => {
   Handlebars.registerPartial(name, template)
 }
 
-export default registerTemplatePartial
+module.exports = registerTemplatePartial

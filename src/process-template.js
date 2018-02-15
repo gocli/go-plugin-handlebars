@@ -1,11 +1,11 @@
-import loadTemplate from './load-template'
+const loadTemplate = require('./load-template')
 
-const processTemplate = (proto, path, contextOrDestPath, contextOrNothing) => {
+const processTemplate = (options, path, contextOrDestPath, contextOrNothing) => {
   const destPath = typeof contextOrDestPath === 'string' ? contextOrDestPath : path
   const context = typeof contextOrDestPath === 'object' ? contextOrDestPath : contextOrNothing || {}
 
-  return loadTemplate(proto, path)
+  return loadTemplate(options, path)
     .then((template) => template(context, destPath))
 }
 
-export default processTemplate
+module.exports = processTemplate

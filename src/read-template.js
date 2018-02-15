@@ -1,11 +1,17 @@
-import Handlebars from 'handlebars'
-import resolveTemplatePath from './resolve-template-path'
+const fs = require('fs')
+const Handlebars = require('handlebars')
+const resolveSourcePath = require('./resolve-source-path')
 
-const readTemplate = (proto, templateName) => {
-  const path = resolveTemplatePath(proto.getTemplateDir(), templateName)
+const readTemplate = (templatesDir, templateName) => new Promise((resolve, reject) => {
+  const path = resolveSourcePath(templatesDir, templateName)
 
-  return proto.readFile(path)
-    .then((templateContent) => Handlebars.compile(templateContent.toString()))
-}
+  return fs.readFile(path, (err, templateContent) => {
+    if (err) {
+      reject(err)
+    } else {
+      resolve(Handlebars.compile(templateContent.toString()))
+    }
+  })
+})
 
-export default readTemplate
+module.exports = readTemplate

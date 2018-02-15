@@ -1,8 +1,9 @@
-import readTemplate from './read-template'
+const fs = require('fs')
+const readTemplate = require('./read-template')
 
-const loadTemplate = (proto, templateName) => {
+const loadTemplate = (options, templateName) => {
   const createRenderFunction = (template) => {
-    return (contextOrPath, path) => {
+    return (contextOrPath, path) => new Promise((resolve, reject) => {
       let context
 
       if (typeof contextOrPath === 'string') {
@@ -13,14 +14,16 @@ const loadTemplate = (proto, templateName) => {
 
       const content = template(context)
 
-      if (!path) return Promise.resolve(content)
-      return proto.writeFile(path, content)
-        .then(() => content)
-    }
+      if (!path) return resolve(content)
+      return fs.writeFile(path, content, (err) => {
+        if (err) reject(err)
+        else resolve(content)
+      })
+    })
   }
 
-  return readTemplate(proto, templateName)
+  return readTemplate(options.templatesDir, templateName)
     .then(createRenderFunction)
 }
 
-export default loadTemplate
+module.exports = loadTemplate

@@ -1,5 +1,6 @@
 docs/
 src/
+tests/
 rollup.config.js
 test.js
 

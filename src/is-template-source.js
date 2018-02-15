@@ -1,8 +1,6 @@
-import { sep } from 'path'
+const { sep } = require('path')
 
-const isTemplateSource = (templateDir, path) => {
-  const templatesPath = templateDir
-  return path === templatesPath || !path.indexOf(templatesPath + sep)
-}
+const isTemplateSource = (templatesDir, path) =>
+  path === templatesDir || !path.indexOf(templatesDir + sep)
 
-export default isTemplateSource
+module.exports = isTemplateSource

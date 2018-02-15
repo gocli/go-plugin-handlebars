@@ -1,44 +1,26 @@
-// TODO: remove setTemplateDir and use plugin options instead
+const loadTemplate = require('./load-template')
+const processTemplate = require('./process-template')
+const processTemplates = require('./process-templates')
+const registerTemplatePartial = require('./register-template-partial')
+const registerTemplateHelper = require('./register-template-helper')
+const normalizeOptions = require('./normalize-options')
 
-import { sep, normalize as normalizePath } from 'path'
-import FsPlugin from 'go-plugin-fs'
-import loadTemplate from './load-template'
-import processTemplate from './process-template'
-import processTemplates from './process-templates'
-import registerTemplatePartial from './register-template-partial'
-import registerTemplateHelper from './register-template-helper'
+const HandlebarsPlugin = (proto, options = {}) => {
+  options = normalizeOptions(HandlebarsPlugin, options)
 
-const DEFAULT_TEMPLATE_DIR = '.templates'
+  const plugin = {}
 
-const HandlebarsPlugin = (proto) => {
-  let templateDir = DEFAULT_TEMPLATE_DIR
+  plugin.getTemplatesDir = () => options.templatesDir
 
-  const getTemplateDir = () => templateDir
+  plugin.loadTemplate = loadTemplate.bind(null, options)
+  plugin.processTemplate = processTemplate.bind(null, options)
+  plugin.processTemplates = processTemplates.bind(null, options)
 
-  const setTemplateDir = (path) => {
-    path = path.trim()
-    if (!path) throw new Error('specify path for template directory')
+  plugin.registerTemplateHelper = registerTemplateHelper
+  plugin.registerTemplatePartial = registerTemplatePartial
 
-    path = normalizePath(path)
-    if (path[path.length - 1] === sep) {
-      path = path.slice(0, 0 - sep.length)
-    }
-
-    templateDir = path
-
-    return templateDir
-  }
-
-  proto.use(FsPlugin)
-
-  proto.setTemplateDir = setTemplateDir
-  proto.getTemplateDir = getTemplateDir
-  proto.processTemplate = processTemplate.bind(0, proto)
-  proto.processTemplates = processTemplates.bind(0, proto)
-  proto.loadTemplate = loadTemplate.bind(0, proto)
-  proto.registerTemplatePartial = registerTemplatePartial
-  proto.registerTemplateHelper = registerTemplateHelper
+  Object.assign(proto, plugin)
 }
 
 const install = HandlebarsPlugin
-export { install, HandlebarsPlugin }
+module.exports = { install, HandlebarsPlugin }

@@ -12,7 +12,7 @@ export default {
     'path',
     'globby',
     'handlebars',
-    'go-plugin-fs'
+    'fs'
   ],
   plugins: [
     standard(),
