@@ -1,5 +1,6 @@
 import buble from 'rollup-plugin-buble'
 import standard from 'rollup-plugin-standard'
+import commonjs from 'rollup-plugin-commonjs'
 
 export default {
   input: 'src/plugin.js',
@@ -16,6 +17,7 @@ export default {
   ],
   plugins: [
     standard(),
+    commonjs({ sourceMap: true }),
     buble({ objectAssign: 'Object.assign' })
   ]
 }

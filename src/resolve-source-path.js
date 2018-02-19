@@ -1,9 +1,9 @@
 const { join } = require('path')
-const isTemplatePath = require('./is-template-path')
+const isCompletePath = require('./is-complete-path')
 
-const resolveSourcePath = (templateDir, templatePath) => {
-  return isTemplatePath(templatePath)
-    ? join(templateDir, templatePath) : templatePath
+const resolveSourcePath = (templatesDir, ...sources) => {
+  return isCompletePath(sources[0])
+    ? join(...sources) : join(templatesDir, ...sources)
 }
 
 module.exports = resolveSourcePath

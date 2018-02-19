@@ -1,6 +1,6 @@
 {
   "name": "go-plugin-handlebars",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Go plugin to apply Handlebars to files",
   "main": "dist/bundle.js",
   "scripts": {
@@ -28,15 +28,24 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "babel-core": "^6.26.0",
-    "fs-extra": "^5.0.0",
+    "buble": "^0.19.3",
+    "proxyquire": "^1.8.0",
     "rollup": "^0.55.3",
     "rollup-plugin-buble": "^0.18.0",
+    "rollup-plugin-commonjs": "^8.3.0",
     "rollup-plugin-standard": "^1.0.0",
+    "sinon": "^4.3.0",
     "snazzy": "^7.0.0",
     "standard": "^10.0.3"
   },
   "dependencies": {
-    "globby": "7.1.1",
+    "fs-extra": "^5.0.0",
+    "globby": "^8.0.1",
     "handlebars": "4.0.11"
+  },
+  "ava": {
+    "require": [
+      "buble/register"
+    ]
   }
 }

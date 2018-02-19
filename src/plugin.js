@@ -1,25 +1,24 @@
-const loadTemplate = require('./load-template')
-const processTemplate = require('./process-template')
+const normalizeOptions = require('./normalize-options')
+const loadTemplates = require('./load-templates')
+const loadTemplatesSync = require('./load-templates-sync')
 const processTemplates = require('./process-templates')
+const processTemplatesSync = require('./process-templates-sync')
 const registerTemplatePartial = require('./register-template-partial')
 const registerTemplateHelper = require('./register-template-helper')
-const normalizeOptions = require('./normalize-options')
 
 const HandlebarsPlugin = (proto, options = {}) => {
   options = normalizeOptions(HandlebarsPlugin, options)
 
-  const plugin = {}
+  proto.getTemplatesDir = () => options.templatesDir
 
-  plugin.getTemplatesDir = () => options.templatesDir
+  proto.loadTemplates = loadTemplates.bind(proto)
+  proto.loadTemplatesSync = loadTemplatesSync.bind(proto)
 
-  plugin.loadTemplate = loadTemplate.bind(null, options)
-  plugin.processTemplate = processTemplate.bind(null, options)
-  plugin.processTemplates = processTemplates.bind(null, options)
+  proto.processTemplates = processTemplates.bind(proto)
+  proto.processTemplatesSync = processTemplatesSync.bind(proto)
 
-  plugin.registerTemplateHelper = registerTemplateHelper
-  plugin.registerTemplatePartial = registerTemplatePartial
-
-  Object.assign(proto, plugin)
+  proto.registerTemplateHelper = registerTemplateHelper
+  proto.registerTemplatePartial = registerTemplatePartial
 }
 
 const install = HandlebarsPlugin
