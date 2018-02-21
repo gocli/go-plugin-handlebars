@@ -2,11 +2,11 @@ const fail = require('./fail')
 const createResolver = require('./create-resolver')
 const save = require('./save')
 
-const processTemplatesSync = function (searchOrContents = {}, context = {}, resolver = '') {
+const processTemplatesSync = function (search, context = {}, resolver = '') {
   try {
     resolver = createResolver(resolver)
 
-    const templates = this.loadTemplatesSync(searchOrContents)
+    const templates = this.loadTemplatesSync(search)
 
     templates.forEach((template) => {
       const data = template.process(context)

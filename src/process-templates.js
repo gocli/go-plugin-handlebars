@@ -2,16 +2,11 @@ const fail = require('./fail')
 const createResolver = require('./create-resolver')
 const save = require('./save')
 
-const processTemplates = function (searchOrContents, context = {}, resolver = '') {
+const processTemplates = function (search, context = {}, resolver = '') {
   return Promise.resolve()
     .then(() => {
       resolver = createResolver(resolver)
-
-      if (Array.isArray(searchOrContents)) {
-        return this.loadTemplates(searchOrContents)
-      } else {
-        return this.loadTemplates(searchOrContents)
-      }
+      return this.loadTemplates(search)
     })
     .then((templates) => {
       const result = templates.map((template) => {
